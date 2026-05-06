@@ -1,0 +1,87 @@
+.app-shell {
+  max-width: 900px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  box-sizing: border-box;
+}
+
+.app-header h1 {
+  margin: 0;
+  font-size: 1.8rem;
+}
+
+.app-header p {
+  margin: 6px 0 0;
+  color: #555;
+}
+
+.chat-window {
+  min-height: 420px;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 14px;
+  background: #fafafa;
+  overflow-y: auto;
+}
+
+.bubble {
+  max-width: 80%;
+  margin-bottom: 10px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  background: white;
+}
+
+.bubble.user {
+  margin-left: auto;
+  background: #eef5ff;
+  border-color: #c5dcff;
+}
+
+.bubble.assistant {
+  margin-right: auto;
+}
+
+.bubble strong {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 0.9rem;
+}
+
+.bubble p {
+  margin: 0;
+  white-space: pre-wrap;
+}
+
+.loading {
+  font-style: italic;
+  color: #666;
+}
+
+.chat-form {
+  display: flex;
+  gap: 8px;
+}
+
+.chat-form input {
+  flex: 1;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+
+.chat-form button {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  background: #2563eb;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+}
