@@ -5,9 +5,7 @@ load_dotenv()
 
 
 class Settings:
-    """
-    Central configuration for CloudCart AI system
-    """
+    """Central configuration for the CloudCart AI system."""
 
     # ── ENVIRONMENT ─────────────────────────────────────────────
     ENV: str = os.getenv("ENV", "development")
@@ -16,12 +14,12 @@ class Settings:
     GOOGLE_API_KEY: str = os.getenv("GOOGLE_API_KEY", "")
     GEMINI_MODEL: str = os.getenv("GEMINI_MODEL", "gemini-2.0-flash")
     GEMINI_MODEL_FALLBACKS: list[str] = [
-        model.strip()
-        for model in os.getenv(
+        m.strip()
+        for m in os.getenv(
             "GEMINI_MODEL_FALLBACKS",
             "gemini-2.5-flash,gemini-2.0-flash,gemini-1.5-flash",
         ).split(",")
-        if model.strip()
+        if m.strip()
     ]
     GEMINI_TEMPERATURE: float = float(os.getenv("GEMINI_TEMPERATURE", 0))
 
@@ -34,12 +32,19 @@ class Settings:
     CURRENT_PROMPT_FILE: str = os.getenv("CURRENT_PROMPT_FILE", "current.yaml")
 
     # ── FEATURE FLAGS ───────────────────────────────────────────
-    ENABLE_INPUT_VALIDATION: bool = os.getenv("ENABLE_INPUT_VALIDATION", "true").lower() == "true"
-    ENABLE_OUTPUT_VALIDATION: bool = os.getenv("ENABLE_OUTPUT_VALIDATION", "true").lower() == "true"
+    ENABLE_INPUT_VALIDATION: bool = (
+        os.getenv("ENABLE_INPUT_VALIDATION", "true").lower() == "true"
+    )
+    ENABLE_OUTPUT_VALIDATION: bool = (
+        os.getenv("ENABLE_OUTPUT_VALIDATION", "true").lower() == "true"
+    )
+    ENABLE_RESPONSE_CACHE: bool = (
+        os.getenv("ENABLE_RESPONSE_CACHE", "true").lower() == "true"
+    )
+    RESPONSE_CACHE_SIZE: int = int(os.getenv("RESPONSE_CACHE_SIZE", 256))
 
     # ── LOGGING ─────────────────────────────────────────────────
     LOG_LEVEL: str = os.getenv("LOG_LEVEL", "INFO")
 
 
-# Singleton instance
 settings = Settings()

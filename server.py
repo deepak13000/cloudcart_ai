@@ -1,8 +1,9 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
+from fastapi.concurrency import run_in_threadpool
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
-from app.agents.cloudcart_agent import safe_cloudcart_agent
+from app.agents.cloudcart_agent import get_prompt_manager, safe_cloudcart_agent
 
 
 class ChatRequest(BaseModel):
@@ -20,11 +21,18 @@ app.add_middleware(
 )
 
 
+@app.on_event("startup")
+async def startup_event() -> None:
+    await run_in_threadpool(get_prompt_manager)
+
+
 @app.get("/api/health")
 def health_check():
-    return {"ok": True}
+    return {"ok": True, "service": "CloudCart AI API"}
 
 
 @app.post("/api/chat")
-def chat(payload: ChatRequest):
-    return safe_cloudcart_agent(payload.message)
+async def chat(payload: ChatRequest):
+    if not payload.message or not payload.message.strip():
+        raise HTTPException(status_code=400, detail="Message cannot be empty.")
+    return await run_in_threadpool(safe_cloudcart_agent, payload.message)
